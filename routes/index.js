@@ -59,6 +59,8 @@ exports.index = function (req, res) {
                             "value":[1,2],
                             "priority":[3,4,5]
                         },
+                        "monitored":0,
+                        "select_items":"extend",
                         "sortfield":"lastchange",
                         "output":"extend"
                     },
@@ -76,7 +78,9 @@ exports.index = function (req, res) {
                     });
                     res.on('end', function(){
                         var ids = [],
-                            res2 = JSON.parse(result).result.slice(-10);
+                            res2 = JSON.parse(result).result.slice(-2);
+
+                        console.log(JSON.parse(result).result.length);
 
                         for (var i = 0, l = res2.length; i < l; i++) {
                             ids[i] = res2[i]['triggerid']
@@ -107,7 +111,7 @@ exports.index = function (req, res) {
 
                         req.write(data);
                         req.end();
-                        console.log(JSON.parse(result).result.slice(-10));
+                        console.log(JSON.parse(result).result.slice(-2));
                         console.log(JSON.parse(result).result.length)
                     });
                 });
