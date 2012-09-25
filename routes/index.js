@@ -26,7 +26,7 @@ var data = JSON.stringify({
     "id": 0
 });
 
-function zbx_request(data) {
+/*function zbx_request(data) {
     return {
         host:'zabbix.avalon.ru',
         port:80,
@@ -37,7 +37,8 @@ function zbx_request(data) {
             'Content-Length':data.length
         }
     };
-}
+}*/
+/*
 
 exports.index = function (req, res) {
 
@@ -132,3 +133,53 @@ exports.index = function (req, res) {
 
     res.render('index', { title:'aaaa' });
 };
+*/
+/*
+
+exports.index = function (req, res) {
+
+    var Connection = require('tedious').Connection;
+
+    var config = {
+        userName: 'ServiceDesk',
+        password: '[$erv1ce@Desk%2]',
+        server: '192.168.17.8'
+    };
+
+    var connection = new Connection(config);
+
+    connection.on('connect', function(err) {
+            // If no error, then good to go...
+            console.log('connected');
+
+            var Request = require('tedious').Request;
+
+            function executeStatement() {
+                request = new Request("EXEC Incidents_SelectLast @Last=10", function(err, rowCount) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(rowCount + ' rows');
+                    }
+                });
+
+                request.on('row', function(columns) {
+                    columns.forEach(function(column) {
+//                        console.log('--------');
+                        console.log(column.metadata.colName + ':\t' + column.value);
+                    });
+                    console.log('---------------------')
+                });
+
+                connection.execSql(request);
+            }
+
+            executeStatement();
+        }
+    );
+
+
+    res.render('index', { title:'Глагне' });
+};
+
+*/
