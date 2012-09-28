@@ -2,17 +2,19 @@ error = #ca0804
 warning = #bc9102
 note = #4685b3
 
+html
+  height: 100%
 
 body
-  padding: 15px
-  width: 1330px
-  height: 730px
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
+  padding: 15px 0px
+  height: 100%
+  font: 14px 'Open Sans', sans-serif;
   background: #16191b
   color: #7d8d97
 h1
   font-size: 56px
-  margin: 0
+  font-family: 'Open Sans Condensed', sans-serif;
+  margin: 0 0 15px
   letter-spacing: -4px
   display: -webkit-flex
   -webkit-flex-flow: row wrap
@@ -20,6 +22,7 @@ h1
 
 h2
   display: inline-block
+  font-family: 'Open Sans Condensed', sans-serif;
   width: 105px
   margin: 0
   color: #FFF
@@ -51,16 +54,22 @@ a
 #main
   display: -webkit-flex
   -webkit-flex-flow: row wrap
+  height: 100%
+  -webkit-align-content: stretch
+  -webkit-align-items: stretch
+
 .column
-  display: -webkit-flex
-  -webkit-flex-flow: column
-  width: 50%
+  -webkit-flex: 1
+  margin: 0 15px
+  -webkit-align-content: stretch
 
 .site-name
   display: -webkit-flex
   -webkit-flex-flow: column
   -webkit-flex: auto
+
 .current-time
+  font-size: 1em
   display: -webkit-flex
   -webkit-flex-flow: column
   -webkit-flex: auto
@@ -69,10 +78,16 @@ a
 article
   border-radius: 10px
   background: #1c2022
+  -webkit-flex: auto
+
+article+article
+  margin-top: 30px
 
 hgroup
+  padding: 5px 14px
   background: #000
   border-radius: 10px 10px 0 0
+  border-bottom: solid 1px #495054
 
 ul
   margin: 0
@@ -81,10 +96,16 @@ ul
 li
   list-style: none
   margin: 0
+  padding: 14px
+
+li + li
+  border-bottom: solid 1px #000
+  border-top: solid 1px #495054
 
 li p
     font-size: 32px
     line-height: 1
+    margin: 4px 0
 
 .disaster p
     color: error
@@ -100,3 +121,18 @@ li p
 
 .expired_tasks p
     color: warning
+
+p.additional
+  font-size: 18px
+  margin-top: 8px
+  color: #7d8d97
+
+.device
+.id
+time
+  font-size: 24px
+  width: 50%
+  display: inline-block
+
+time
+    text-align:right

@@ -9,8 +9,8 @@ var querystring = require('querystring'),
 //    "jsonrpc":"2.0",
 //    "method":"user.login",
 //    "params":{
-//        "user":"mikhailb",
-//        "password":"passforh4"
+//        "user":"",
+//        "password":""
 //    },
 //    "id":1
 //});
@@ -19,8 +19,8 @@ var data = JSON.stringify({
     "jsonrpc": "2.0",
     "method": "user.authenticate",
     "params": {
-        "user": "mikhailb",
-        "password": "passforh4"
+        "user": "",
+        "password": ""
     },
     "auth": null,
     "id": 0
@@ -140,9 +140,9 @@ exports.index = function (req, res) {
     var Connection = require('tedious').Connection;
 
     var config = {
-        userName: 'ServiceDesk',
-        password: '[$erv1ce@Desk%2]',
-        server: '192.168.17.8'
+        userName: '',
+        password: '',
+        server: ''
     };
 
     var connection = new Connection(config);
