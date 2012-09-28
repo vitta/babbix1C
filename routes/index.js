@@ -134,7 +134,6 @@ exports.index = function (req, res) {
     res.render('index', { title:'aaaa' });
 };
 */
-/*
 
 exports.index = function (req, res) {
 
@@ -171,6 +170,10 @@ exports.index = function (req, res) {
                     console.log('---------------------')
                 });
 
+                request.on('error', function(e) {
+
+                });
+
                 connection.execSql(request);
             }
 
@@ -179,7 +182,22 @@ exports.index = function (req, res) {
     );
 
 
-    res.render('index', { title:'Глагне' });
+    res.render('index', {
+        title:'Babbix',
+        time: new Date().getHours() + ":" + new Date().getMinutes(),
+        counts: {
+            triggers: {
+                disaster: 1,
+                high: 4,
+                average: 1
+            },
+            tasks: {
+                expired: 2,
+                new: 4,
+                total: 43
+            }
+        }
+    });
 };
 
-*/
+

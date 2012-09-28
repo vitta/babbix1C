@@ -1,5 +1,81 @@
 extends layout
 
-block content
-  h1= title
-  p Welcome to #{title}
+block column_1
+  h1
+    span.site-name=title
+    time.current-time=time
+  article.triggers
+    hgroup
+      h2.disaster
+        strong=counts.triggers.disaster
+        span &nbsp;disaster
+      h2.high
+        strong=counts.triggers.high
+        span &nbsp;high
+      h2.average
+        strong=counts.triggers.average
+        span &nbsp;average
+    ul
+      li.disaster
+        span.device Cisco2960in221_2
+        time 19m 10s
+        p [Port FastEthernet0/16 OperStatus] 10016 status has changed
+      li.high
+        span.device eregion
+        time 27m 24s
+        p Low free disk space on eregion.avalon.ru volume c:
+      li.high
+        span.device Office202_2
+        time 9d 1h 17m
+        p Toner black low on printer Office202_2
+      li.average
+        span.device Cisco2960in221_2
+        time 19m 10s
+        p [Port FastEthernet0/16 OperStatus] 10016 status has changed
+
+block column_2
+  article.new_tasks
+    hgroup
+      h2.expired
+        strong=counts.tasks.expired
+        span &nbsp;просрочено
+      h2.new
+        strong=counts.tasks.new
+        span &nbsp;новых
+      h2.total
+        strong=counts.tasks.total
+        span &nbsp;всего
+    ul
+      li
+        span.id 6416
+        time Oct 05 2012 22:00:00
+        p Подготовка ком. 327 к переезду секретарей КИТвП
+        p.additional
+            span.place 327
+      li
+        span.id 6415
+        time Oct 05 2012 22:00:00
+        p Не удается просмотреть извне расписание на portal.avalon.ru
+        p.additional
+            span.device portal.avalon.ru
+      li
+        span.id 6414
+        time Oct 05 2012 22:00:00
+        p Диски для Энергетического менеджмента
+        p.additional
+            span.place аудитория 204
+
+  article.expired_tasks
+    ul
+      li
+        span.id 6416
+        time Oct 05 2012 22:00:00
+        p Подготовка ком. 327 к переезду секретарей КИТвП
+        p.additional
+            span.place 327
+      li
+        span.id 6415
+        time Oct 05 2012 22:00:00
+        p Не удается просмотреть извне расписание на portal.avalon.ru
+        p.additional
+            span.device portal.avalon.ru
