@@ -14,6 +14,33 @@ h1 {
   -webkit-flex-flow: row wrap;
   -webkit-justify-content: space-between;
 }
+h2 {
+  display: inline-block;
+  width: 105px;
+  margin: 0;
+  color: #fff;
+}
+h2 strong {
+  font-size: 56px;
+}
+h2 span {
+  font-size: 12px;
+}
+h2.disaster {
+  color: #ca0804;
+}
+h2.high {
+  color: #bc9102;
+}
+h2.average {
+  color: #4685b3;
+}
+h2.expired {
+  color: #ca0804;
+}
+h2.new {
+  color: #4685b3;
+}
 a {
   color: #00b7ff;
 }
@@ -36,4 +63,39 @@ a {
   -webkit-flex-flow: column;
   -webkit-flex: auto;
   text-align: right;
+}
+article {
+  border-radius: 10px;
+  background: #1c2022;
+}
+hgroup {
+  background: #000;
+  border-radius: 10px 10px 0 0;
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style: none;
+  margin: 0;
+}
+li p {
+  font-size: 32px;
+  line-height: 1;
+}
+.disaster p {
+  color: #ca0804;
+}
+.high p {
+  color: #bc9102;
+}
+.average p {
+  color: #4685b3;
+}
+.new_tasks p {
+  color: #fff;
+}
+.expired_tasks p {
+  color: #bc9102;
 }

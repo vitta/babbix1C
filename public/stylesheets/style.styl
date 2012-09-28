@@ -1,3 +1,8 @@
+error = #ca0804
+warning = #bc9102
+note = #4685b3
+
+
 body
   padding: 15px
   width: 1330px
@@ -12,6 +17,34 @@ h1
   display: -webkit-flex
   -webkit-flex-flow: row wrap
   -webkit-justify-content: space-between
+
+h2
+  display: inline-block
+  width: 105px
+  margin: 0
+  color: #FFF
+
+h2 strong
+  font-size: 56px
+
+h2 span
+  font-size:12px
+
+h2.disaster
+  color: error
+
+h2.high
+  color: warning
+
+h2.average
+  color: note
+
+h2.expired
+  color: error
+
+h2.new
+  color: note
+
 a
   color: #00B7FF
 
@@ -32,3 +65,38 @@ a
   -webkit-flex-flow: column
   -webkit-flex: auto
   text-align:right
+
+article
+  border-radius: 10px
+  background: #1c2022
+
+hgroup
+  background: #000
+  border-radius: 10px 10px 0 0
+
+ul
+  margin: 0
+  padding: 0
+
+li
+  list-style: none
+  margin: 0
+
+li p
+    font-size: 32px
+    line-height: 1
+
+.disaster p
+    color: error
+
+.high p
+    color: warning
+
+.average p
+    color: note
+
+.new_tasks p
+    color: #FFF
+
+.expired_tasks p
+    color: warning
