@@ -2,9 +2,10 @@ html {
   height: 100%;
 }
 body {
-  padding: 15px 0px;
-  height: 100%;
   font: 14px 'Open Sans', sans-serif;
+  height: 738px;
+  overflow: hidden;
+  padding: 15px 0px;
   background: #16191b;
   color: #7d8d97;
 }
@@ -42,13 +43,16 @@ h2.average {
 h2.expired {
   color: #ca0804;
 }
-h2.new {
-  color: #4685b3;
+h2.total {
+  color: #7d8d97;
 }
 a {
   color: #00b7ff;
 }
 #main {
+  width: 1380px;
+  height: 768px;
+  overflow: hidden;
   display: -webkit-flex;
   -webkit-flex-flow: row wrap;
   height: 100%;
@@ -90,14 +94,19 @@ ul {
   margin: 0;
   padding: 0;
 }
+ul + ul {
+  border-top: 10px solid #16191b;
+}
 li {
   list-style: none;
   margin: 0;
   padding: 14px;
 }
 li + li {
-  border-bottom: solid 1px #000;
   border-top: solid 1px #495054;
+}
+li + li:not(:last-child) {
+  border-bottom: solid 1px #000;
 }
 li p {
   font-size: 32px;
@@ -117,17 +126,24 @@ li p {
   color: #fff;
 }
 .expired_tasks p {
-  color: #bc9102;
+  color: #ca0804;
 }
 p.additional {
   font-size: 18px;
   margin-top: 8px;
   color: #7d8d97;
 }
+.id {
+  font-size: 20px;
+  line-height: 1;
+  float: right;
+  margin-left: 2ex;
+  padding-top: 8px;
+}
 .device,
-.id,
+.place,
 time {
-  font-size: 24px;
+  font-size: 20px;
   width: 50%;
   display: inline-block;
 }
