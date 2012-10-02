@@ -1,18 +1,17 @@
+var config = require('../config.json');
+
 var data = JSON.stringify({
     "jsonrpc": "2.0",
     "method": "user.authenticate",
-    "params": {
-        "user": "",
-        "password": ""
-    },
+    "params": config.zabbix.authParams,
     "auth": null,
     "id": 0
 });
 
 /*function zbx_request(data) {
  return {
- host:'zabbix.avalon.ru',
- port:80,
+ host:config.zabbix.host,
+ port:config.zabbix.port,
  path:'/zabbix/api_jsonrpc.php',
  method:'POST',
  headers:{

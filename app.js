@@ -43,9 +43,13 @@ socket.sockets.on('connection', function (socket) {
     socket.on('my other event', function (data) {
         console.log(data);
     });
-    var data = servicedesk.get();
+    var data = servicedesk.sdsk;
 
-    console.log(data);
+    data(function(a){console.log(a);});
+
+
+
+//    console.log(data);
 });
 
 

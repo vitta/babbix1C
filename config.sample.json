@@ -1,0 +1,15 @@
+{
+    "servicedesk": {
+        "userName":"",
+        "password":"",
+        "server":""
+    },
+    "zabbix": {
+        "authParams": {
+            "user": "",
+            "password": ""
+        },
+        "host":"",
+        "port":80
+    }
+}
