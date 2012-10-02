@@ -7,7 +7,9 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , io = require('socket.io')
+  , servicedesk = require('./routes/servicedesk');
 
 var app = express();
 
@@ -29,8 +31,24 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.get('/users', user.list);
 
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+
+var socket = io.listen(server).set('log level', 1);
+
+socket.sockets.on('connection', function (socket) {
+    socket.emit('news', { hello: 'world' });
+    socket.on('my other event', function (data) {
+        console.log(data);
+    });
+    var data = servicedesk.get();
+
+    console.log(data);
+});
+
+
+
+//console.log(socket);
+
