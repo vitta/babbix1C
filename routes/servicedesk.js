@@ -12,6 +12,12 @@ function getData(query, callback) {
             if (err) {
                 console.log(err);
             } else {
+                result.forEach(function(elem, id, arr) {
+                    arr[id] = {}
+                    elem.forEach(function(elem) {
+                        arr[id][elem.metadata.colName] = elem.value;
+                    });
+                });
                 callback(result);
             }
         });
