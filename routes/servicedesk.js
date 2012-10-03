@@ -1,52 +1,41 @@
-function getMeAll(callback) {
 
-    var Connection = require('tedious').Connection;
-    var Request = require('tedious').Request;
-    var config = require('../config.json');
+var Connection = require('tedious').Connection,
+    Request = require('tedious').Request,
+    config = require('../config.json');
 
+function getNewTasks(callback) {
     var connection = new Connection(config.servicedesk),
-        result = '';
+        result = [];
+
+    function executeStatement() {
+        var request = new Request("EXEC Incidents_SelectLast @Last=11", function (err, rowCount) {
+            if (err) {
+                console.log(err);
+            } else {
+                callback(result);
+            }
+        });
+
+        request.on('row', function (columns) {
+            result.push(columns);
+        });
+
+        request.on('error', function (e) {
+            console.log('Request Error')
+        });
+
+        connection.execSql(request);
+    }
 
     connection.on('connect', function (err) {
-            // If no error, then good to go...
-            console.log('connected...');
-
-
-            function executeStatement() {
-                request = new Request("EXEC Incidents_SelectLast @Last=10", function (err, rowCount) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log(rowCount + ' rows');
-                    }
-                });
-
-                request.on('row', function (columns) {
-                    columns.forEach(function (column) {
-                        result += (column.metadata.colName + ':\t' + column.value);
-                    });
-                    result += ('---------------------')
-
-                    callback(result);
-                });
-
-                request.on('error', function (e) {
-
-                });
-
-                connection.execSql(request);
-            }
-
             executeStatement();
         }
     );
 
 
-    connection.on('error', function (err) {
-        console.log('somthing was wrong');
+    connection.on('errorMessage', function (err) {
+        console.log('Connection error');
     });
-
-    console.log('I am run');
 }
 
-exports.sdsk = getMeAll;
+exports.newTasks = getNewTasks;

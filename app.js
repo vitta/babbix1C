@@ -5,7 +5,6 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
   , io = require('socket.io')
@@ -39,20 +38,19 @@ var server = http.createServer(app).listen(app.get('port'), function(){
 var socket = io.listen(server).set('log level', 1);
 
 socket.sockets.on('connection', function (socket) {
+    var newTasks = servicedesk.newTasks;
+
     socket.emit('news', { hello: 'world' });
     socket.on('my other event', function (data) {
         console.log(data);
     });
-    var data = servicedesk.sdsk;
+    newTasks(function(){
+        var that = arguments.callee,
+            data = arguments[0];
 
-    data(function(a){console.log(a);});
-
-
-
-//    console.log(data);
+        socket.emit("newTasks", data);
+        setTimeout(function() {
+            newTasks(that);
+        }, 5000);
+    });
 });
-
-
-
-//console.log(socket);
-
