@@ -79,44 +79,9 @@ function getTriggers(callback) {
         });
 
         res.on('end', function () {
-            var ids = [],
-                triggers = JSON.parse(result).result;
+            var triggers = JSON.parse(result).result;
 
-            triggers.forEach(function(trigger) {
-                ids.push(trigger.triggerid);
-            });
-
-            var data = JSON.stringify({
-                "jsonrpc":"2.0",
-                "method":"host.get",
-                "params":{
-                    "triggerids":ids,
-                    "output":"extend"
-                },
-                "auth":token,
-                "id":"2"
-            });
-
-            var req = http.request(zbx_request(data), function (res) {
-                var result = '';
-
-                res.on('data', function (chunk) {
-                    result += chunk;
-                });
-
-                res.on('end', function () {
-                    var hosts = JSON.parse(result).result;
-
-                    triggers.forEach(function(trigger) {
-                        getHostName(trigger, hosts);
-                    });
-
-                    callback(triggers);
-                });
-            });
-
-            req.write(data);
-            req.end();
+            getHosts(triggers, callback);
         });
     });
 
@@ -128,6 +93,48 @@ function getTriggers(callback) {
     newreq1.end();
 
 };
+
+
+function getHosts(triggers, callback) {
+    var data,
+        ids = [];
+
+    triggers.forEach(function(trigger) {
+        ids.push(trigger.triggerid);
+    });
+
+    data = JSON.stringify({
+        "jsonrpc":"2.0",
+        "method":"host.get",
+        "params":{
+            "triggerids":ids,
+            "output":"extend"
+        },
+        "auth":token,
+        "id":"2"
+    });
+
+    var req = http.request(zbx_request(data), function (res) {
+        var result = '';
+
+        res.on('data', function (chunk) {
+            result += chunk;
+        });
+
+        res.on('end', function () {
+            var hosts = JSON.parse(result).result;
+
+            triggers.forEach(function(trigger) {
+                getHostName(trigger, hosts);
+            });
+
+            callback(triggers);
+        });
+    });
+
+    req.write(data);
+    req.end();
+}
 
 exports.triggers = function (callback) {
     auth(function() {
