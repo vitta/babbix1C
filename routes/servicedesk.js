@@ -12,7 +12,6 @@ function getData(query, callback) {
             if (err) {
                 console.log(err);
             } else {
-                console.log(query);
                 callback(result);
             }
         });
