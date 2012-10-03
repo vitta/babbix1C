@@ -3,15 +3,16 @@ var Connection = require('tedious').Connection,
     Request = require('tedious').Request,
     config = require('../config.json');
 
-function getNewTasks(callback) {
+function getData(query, callback) {
     var connection = new Connection(config.servicedesk),
         result = [];
 
     function executeStatement() {
-        var request = new Request("EXEC Incidents_SelectLast @Last=11", function (err, rowCount) {
+        var request = new Request(query, function (err, rowCount) {
             if (err) {
                 console.log(err);
             } else {
+                console.log(query);
                 callback(result);
             }
         });
@@ -38,4 +39,10 @@ function getNewTasks(callback) {
     });
 }
 
-exports.newTasks = getNewTasks;
+exports.newTasks = function(callback) {
+    getData("EXEC Incidents_SelectLast @Last=11", callback);
+};
+
+exports.overdueTasks = function(callback) {
+    getData("EXEC Incidents_SelectOverdue", callback);
+};
