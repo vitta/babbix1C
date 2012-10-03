@@ -5,17 +5,17 @@ block column_1
     span.site-name=title
     time.current-time=time
   article.triggers
-    hgroup
+    hgroup.triggers-counters
       h2.disaster
-        strong=counts.triggers.disaster
+        strong.counter=counts.triggers.disaster
         span disaster
       h2.high
-        strong=counts.triggers.high
+        strong.counter=counts.triggers.high
         span high
       h2.average
-        strong=counts.triggers.average
+        strong.counter=counts.triggers.average
         span average
-    ul
+    ul.triggers-data
       li.disaster
         span.device Cisco2960in221_2
         time 19m 10s
@@ -34,18 +34,18 @@ block column_1
         p [Port FastEthernet0/16 OperStatus] 10016 status has changed
 
 block column_2
-  article.new_tasks
-    hgroup
+  article.new-tasks
+    hgroup.tasks-counter
       h2.expired
-        strong=counts.tasks.expired
+        strong.counter=counts.tasks.expired
         span просрочено
       h2.new
-        strong=counts.tasks.new
+        strong.counter=counts.tasks.new
         span новых
       h2.total
-        strong=counts.tasks.total
+        strong.counter=counts.tasks.total
         span всего
-    ul
+    ul.new-tasks-data
       li
         span.id 6416
         p Подготовка ком. 327 к переезду секретарей КИТвП
@@ -64,7 +64,7 @@ block column_2
         p.additional
             span.place аудитория 204
             time Oct 05 2012 22:00:00
-    ul.expired_tasks
+    ul.expired-tasks-data
       li
         span.id 6416
         p Подготовка ком. 327 к переезду секретарей КИТвП

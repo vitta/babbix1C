@@ -63,7 +63,7 @@ function getTriggers(callback) {
             },
             "monitored":0,
             "select_items":"extend",
-            "sortfield":"lastchange",
+            "sortfield":["priority", "lastchange"],
             "output":"extend"
         },
         "auth":token,
@@ -92,7 +92,7 @@ function getTriggers(callback) {
     newreq1.write(newdata);
     newreq1.end();
 
-};
+}
 
 
 function getHosts(triggers, callback) {

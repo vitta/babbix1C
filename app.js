@@ -50,7 +50,7 @@ socket.sockets.on('connection', function (socket) {
         socket.emit("newTasks", data);
         setTimeout(function() {
             newTasks(that);
-        }, 5000);
+        }, 30000);
     });
 
     overdueTasks(function() {
@@ -60,7 +60,7 @@ socket.sockets.on('connection', function (socket) {
         socket.emit("overdueTasks", data);
         setTimeout(function() {
             overdueTasks(that);
-        }, 5000);
+        }, 30000);
     });
 
     triggers(function() {
@@ -70,6 +70,6 @@ socket.sockets.on('connection', function (socket) {
         socket.emit("triggers", data);
         setTimeout(function() {
             triggers(that);
-        }, 5000);
+        }, 30000);
     });
 });

@@ -122,10 +122,10 @@ li p {
 .average p {
   color: #4685b3;
 }
-.new_tasks p {
+.new-tasks-data p {
   color: #fff;
 }
-.expired_tasks p {
+.expired-tasks-data p {
   color: #ca0804;
 }
 p.additional {
