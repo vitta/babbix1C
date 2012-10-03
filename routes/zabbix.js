@@ -1,118 +1,136 @@
-var config = require('../config.json');
+var config = require('../config.json'),
+    http = require('http'),
+    token,
+    authData;
 
-var data = JSON.stringify({
-    "jsonrpc": "2.0",
-    "method": "user.authenticate",
-    "params": config.zabbix.authParams,
-    "auth": null,
-    "id": 0
+function zbx_request(data) {
+    return {
+        host:config.zabbix.host,
+        port:config.zabbix.port,
+        path:'/zabbix/api_jsonrpc.php',
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json',
+            'Content-Length':data.length
+        }
+    };
+}
+
+authData = JSON.stringify({
+    "jsonrpc":"2.0",
+    "method":"user.authenticate",
+    "params":config.zabbix.authParams,
+    "auth":null,
+    "id":0
 });
 
-/*function zbx_request(data) {
- return {
- host:config.zabbix.host,
- port:config.zabbix.port,
- path:'/zabbix/api_jsonrpc.php',
- method:'POST',
- headers:{
- 'Content-Type':'application/json',
- 'Content-Length':data.length
- }
- };
- }*/
-/*
+function getHostName(triggerObj, hosts) {
+    hosts.forEach(function(elem, index, arr) {
+        elem.triggers.forEach(function(trigger) {
+            if (trigger.triggerid == triggerObj.triggerid) {
+                triggerObj['hostname'] = elem.name;
+                triggerObj.description = triggerObj.description.replace('{HOSTNAME}', elem.name);
+            }
+        })
+    })
+};
 
- exports.index = function (req, res) {
+function auth(callback) {
+    var newreq = http.request(zbx_request(authData), function (res) {
+        res.on('data', function (chunk) {
+            token = JSON.parse(chunk).result;
+            callback();
+        });
+    });
 
- var newreq = http.request(zbx_request(data), function (res) {
- //        res.setEncoding('utf8');
+    newreq.on('error', function (e) {
+        console.log(e);
+    });
 
- res.on('data', function (chunk) {
- console.log("body: " + chunk);
+    newreq.write(authData);
+    newreq.end();
+}
 
- var id = JSON.parse(chunk).result;
+function getTriggers(callback) {
+    var newdata = JSON.stringify({
+        "jsonrpc":"2.0",
+        "method":"trigger.get",
+        "params":{
+            "filter":{
+                "status":[0],
+                "value":[1, 2],
+                "priority":[3, 4, 5]
+            },
+            "monitored":0,
+            "select_items":"extend",
+            "sortfield":"lastchange",
+            "output":"extend"
+        },
+        "auth":token,
+        "id":"2"
+    });
 
- var newdata = JSON.stringify(
- {
- "jsonrpc": "2.0",
- "method": "trigger.get",
- "params": {
- "filter": {
- "status":[0],
- "value":[1,2],
- "priority":[3,4,5]
- },
- "monitored":0,
- "select_items":"extend",
- "sortfield":"lastchange",
- "output":"extend"
- },
- "auth": id,
- "id": "2"
- }
- );
 
- (function (newdata) {
- var newreq1 = http.request(zbx_request(newdata), function (res) {
- //res.setEncoding('utf8');
- var result = '';
- res.on('data', function (chunk) {
- result += chunk;
- });
- res.on('end', function(){
- var ids = [],
- res2 = JSON.parse(result).result.slice(-2);
+    var newreq1 = http.request(zbx_request(newdata), function (res) {
+        var result = '';
 
- console.log(JSON.parse(result).result.length);
+        res.on('data', function (chunk) {
+            result += chunk;
+        });
 
- for (var i = 0, l = res2.length; i < l; i++) {
- ids[i] = res2[i]['triggerid']
- }
+        res.on('end', function () {
+            var ids = [],
+                triggers = JSON.parse(result).result;
 
- var data = JSON.stringify({
- "jsonrpc": "2.0",
- "method": "host.get",
- "params": {
- "triggerids": ids,
- "output":"extend"
- },
- "auth": id,
- "id": "3"
- });
+            triggers.forEach(function(trigger) {
+                ids.push(trigger.triggerid);
+            });
 
- var req = http.request(zbx_request(data), function(res) {
- var result = '';
+            var data = JSON.stringify({
+                "jsonrpc":"2.0",
+                "method":"host.get",
+                "params":{
+                    "triggerids":ids,
+                    "output":"extend"
+                },
+                "auth":token,
+                "id":"2"
+            });
 
- res.on('data', function(chunk) {
- result += chunk;
- });
+            var req = http.request(zbx_request(data), function (res) {
+                var result = '';
 
- res.on('end', function() {
- console.log(JSON.parse((result)));
- });
- });
+                res.on('data', function (chunk) {
+                    result += chunk;
+                });
 
- req.write(data);
- req.end();
- console.log(JSON.parse(result).result.slice(-2));
- console.log(JSON.parse(result).result.length)
- });
- });
+                res.on('end', function () {
+                    var hosts = JSON.parse(result).result;
 
- newreq1.write(newdata);
- newreq1.end();
+                    triggers.forEach(function(trigger) {
+                        getHostName(trigger, hosts);
+                    });
 
- })(newdata);
- });
- });
+                    callback(triggers);
+                });
+            });
 
- newreq.on('error', function (e) {
- console.log(e);
- });
+            req.write(data);
+            req.end();
+        });
+    });
 
- newreq.write(data);
- newreq.end();
+    newreq1.on('error', function (e) {
+        console.log(e);
+    });
 
- res.render('index', { title:'aaaa' });
- };
- */
+    newreq1.write(newdata);
+    newreq1.end();
+
+};
+
+exports.triggers = function (callback) {
+    auth(function() {
+        getTriggers(callback);
+    });
+};
