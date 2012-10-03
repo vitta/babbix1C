@@ -8,12 +8,12 @@ function getData(query, callback) {
         result = [];
 
     function executeStatement() {
-        var request = new Request(query, function (err, rowCount) {
+        var request = new Request(query, function (err) {
             if (err) {
                 console.log(err);
             } else {
                 result.forEach(function(elem, id, arr) {
-                    arr[id] = {}
+                    arr[id] = {};
                     elem.forEach(function(elem) {
                         arr[id][elem.metadata.colName] = elem.value;
                     });
@@ -26,21 +26,21 @@ function getData(query, callback) {
             result.push(columns);
         });
 
-        request.on('error', function (e) {
-            console.log('Request Error')
-        });
-
         connection.execSql(request);
     }
 
     connection.on('connect', function (err) {
-            executeStatement();
+            if(err) {
+                console.log('Connection error: ' + err);
+            } else {
+                executeStatement();
+            }
         }
     );
 
 
     connection.on('errorMessage', function (err) {
-        console.log('Connection error');
+        console.log('Connection error: ' + err);
     });
 }
 
