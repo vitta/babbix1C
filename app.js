@@ -8,7 +8,8 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , io = require('socket.io')
-  , servicedesk = require('./routes/servicedesk');
+  , servicedesk = require('./routes/servicedesk')
+  , zabbix = require('./routes/zabbix');
 
 var app = express();
 
@@ -39,7 +40,8 @@ var socket = io.listen(server).set('log level', 1);
 
 socket.sockets.on('connection', function (socket) {
     var newTasks = servicedesk.newTasks,
-        overdueTasks = servicedesk.overdueTasks;
+        overdueTasks = servicedesk.overdueTasks,
+        triggers = zabbix.triggers;
 
     newTasks(function() {
         var that = arguments.callee,
@@ -58,6 +60,16 @@ socket.sockets.on('connection', function (socket) {
         socket.emit("overdueTasks", data);
         setTimeout(function() {
             overdueTasks(that);
+        }, 5000);
+    });
+
+    triggers(function() {
+        var that = arguments.callee,
+            data = arguments[0];
+
+        socket.emit("triggers", data);
+        setTimeout(function() {
+            triggers(that);
         }, 5000);
     });
 });

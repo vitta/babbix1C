@@ -8,5 +8,5 @@ socket
         console.log("overdue: " + data.length);
     })
     .on("triggers", function (data) {
-        console.log("triggers" + data);
+        console.log(data);
     });
