@@ -41,6 +41,7 @@ var socket = io.listen(server).set('log level', 1);
 socket.sockets.on('connection', function (socket) {
     var newTasks = servicedesk.newTasks,
         overdueTasks = servicedesk.overdueTasks,
+        taskCounter = servicedesk.taskCounter,
         triggers = zabbix.triggers;
 
     newTasks(function() {
@@ -70,6 +71,16 @@ socket.sockets.on('connection', function (socket) {
         socket.emit("triggers", data);
         setTimeout(function() {
             triggers(that);
+        }, 30000);
+    });
+
+    taskCounter(function() {
+        var that = arguments.callee,
+            data = arguments[0];
+
+        socket.emit("taskCounter", data);
+        setTimeout(function() {
+            taskCounter(that);
         }, 30000);
     });
 });

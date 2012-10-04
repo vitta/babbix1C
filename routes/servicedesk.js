@@ -8,7 +8,7 @@ function getData(query, callback) {
         result = [];
 
     function executeStatement() {
-        var request = new Request(query, function (err) {
+        var request = new Request(query, function (err, rowCount) {
             if (err) {
                 console.log(err);
             } else {
@@ -51,3 +51,7 @@ exports.newTasks = function(callback) {
 exports.overdueTasks = function(callback) {
     getData("EXEC Incidents_SelectOverdue", callback);
 };
+
+exports.taskCounter = function(callback) {
+    getData("IncidentsStatusSummaries_SelectAll", callback);
+}

@@ -1,5 +1,5 @@
 $(function(){
-    var socket = io.connect('http://localhost:3000');
+    var socket = io.connect('http://192.168.17.201:3000');
 
     _.templateSettings = {
         interpolate : /\{\{(.+?)\}\}/g
@@ -14,6 +14,9 @@ $(function(){
         })
         .on("triggers", function (data) {
             showTriggers(data);
+        })
+        .on("taskCounter", function (data) {
+            showTaskCounter(data);
         });
 
     function pad(n) {
@@ -52,7 +55,7 @@ $(function(){
         var timer = $('.current-time'),
             date = new Date();
 
-        timer.text(pad(date.getHours()) + ':' + pad(date.getMinutes()));
+        timer.html(pad(date.getHours()) + ':' + pad(date.getMinutes()));
     }
 
     function showTasks(data, type, count) {
@@ -128,5 +131,13 @@ $(function(){
         });
 
         container.html(html);
+    }
+
+    function showTaskCounter(data) {
+        var counter = $('.tasks-counter .total .counter').text(0);
+
+        data.filter(function(elem, index) {return elem.StatusID <=64}).forEach(function(elem, index) {
+            counter.text(+counter.text() + elem.IncidentCount);
+        });
     }
 });
