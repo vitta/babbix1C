@@ -104,10 +104,10 @@ $(function(){
         counters.average.text(data.filter(function(elem) {return elem.priority == 3}).length);
 
         data.sort(function(a, b) {
-            if(a.priority > b.priority) {
+            if(a.priority < b.priority) {
                 return 1;
             }
-            if (a.priority < b.priority) {
+            if (a.priority > b.priority) {
                 return -1;
             }
             if (a.priority == b.priority) {
