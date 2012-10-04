@@ -1,5 +1,5 @@
 $(function(){
-    var socket = io.connect('http://192.168.17.201:3000');
+    var socket = io.connect(window.location.host);
 
     _.templateSettings = {
         interpolate : /\{\{(.+?)\}\}/g
