@@ -1,3 +1,15 @@
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url("/fonts/DXI1ORHCpsQm3Vp6mXoaTVMBBrntOh5tSEdJ1aeglyY.woff") format('woff');
+}
+@font-face {
+  font-family: 'Open Sans Condensed';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Condensed Bold'), local('OpenSans-CondensedBold'), url("/fonts/gk5FxslNkTTHtojXrkp-xJ0vPo4dEKwDSrJSq13K7ifr7w4p9aSvGirXi6XmeXNA.woff") format('woff');
+}
 html {
   height: 100%;
 }
