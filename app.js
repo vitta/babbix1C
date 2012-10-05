@@ -9,9 +9,12 @@ var express = require('express')
   , path = require('path')
   , io = require('socket.io')
   , servicedesk = require('./routes/servicedesk')
+  , fs = require('fs')
   , zabbix = require('./routes/zabbix');
 
 var app = express();
+
+var logFile = fs.createWriteStream('./error.log', {flags: 'a'});
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -19,6 +22,7 @@ app.configure(function(){
   app.set('view engine', 'jade');
   app.use(express.favicon());
   app.use(express.logger('dev'));
+  app.use(express.logger({stream: logFile}));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
