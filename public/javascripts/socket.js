@@ -6,6 +6,12 @@ $(function(){
     };
 
     socket
+        .on("disconnect", raiseDisconnect)
+        .on("connect_failed", raiseDisconnect)
+        .on("error", raiseDisconnect)
+        .on("reconnect_failed", raiseDisconnect)
+        .on("reconnect", clearDisconnect)
+        .on("connect", clearDisconnect)
         .on("newTasks", function (data) {
             showTasks(data, 'new', 3);
         })
@@ -21,6 +27,14 @@ $(function(){
 
     function pad(n) {
         return n < 10 ? '0' + n : n
+    }
+
+    function raiseDisconnect() {
+        $(".site-name").addClass("disconnected");
+    }
+
+    function clearDisconnect() {
+        $(".site-name").removeClass("disconnected");
     }
 
     function printDate(date) {

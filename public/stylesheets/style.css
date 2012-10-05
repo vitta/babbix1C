@@ -88,6 +88,9 @@ a {
   -webkit-flex: auto;
   text-align: right;
 }
+.disconnected {
+  color: #ca0804;
+}
 article {
   border-radius: 10px;
   background: #1c2022;
