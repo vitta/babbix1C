@@ -31,6 +31,7 @@ $(function(){
 
     function raiseDisconnect() {
         $(".site-name").addClass("disconnected");
+        $(".error-sound")[0].play();
     }
 
     function clearDisconnect() {
