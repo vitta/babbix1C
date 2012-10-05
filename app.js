@@ -14,7 +14,14 @@ var express = require('express')
 
 var app = express();
 
-var logFile = fs.createWriteStream('./error.log', {flags: 'a'});
+var logFile = fs.createWriteStream(__dirname + '/error.log', {flags: 'a'});
+
+
+process.on('uncaughtException', function (err) {
+        logFile.write('uncaughtException: ' + err.message);
+        logFile.write(err.stack);
+    }
+);
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
