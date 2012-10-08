@@ -52,7 +52,7 @@ function auth(callback) {
 }
 
 function getTriggers(callback) {
-    var newdata = JSON.stringify({
+    var data = JSON.stringify({
         "jsonrpc":"2.0",
         "method":"trigger.get",
         "params":{
@@ -71,7 +71,7 @@ function getTriggers(callback) {
     });
 
 
-    var newreq1 = http.request(zbx_request(newdata), function (res) {
+    var request = http.request(zbx_request(data), function (res) {
         var result = '';
 
         res.on('data', function (chunk) {
@@ -85,12 +85,13 @@ function getTriggers(callback) {
         });
     });
 
-    newreq1.on('error', function (e) {
-        console.log(e);
+    request.on('error', function (e) {
+//        TODO: сделать логгирование
+//        console.log(e);
     });
 
-    newreq1.write(newdata);
-    newreq1.end();
+    request.write(data);
+    request.end();
 
 }
 

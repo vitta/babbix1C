@@ -19,6 +19,7 @@ function getData(query, callback) {
                     });
                 });
                 callback(result);
+                connection.close();
             }
         });
 
