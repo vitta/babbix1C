@@ -1,5 +1,6 @@
 $(function(){
-    var socket = io.connect(window.location.host);
+    var socket = io.connect(window.location.host),
+        newTasks = 3;
 
     _.templateSettings = {
         interpolate : /\{\{(.+?)\}\}/g
@@ -16,7 +17,7 @@ $(function(){
             showTasks(data, 'new', 3);
         })
         .on("overdueTasks", function (data) {
-            showTasks(data, 'expired', 2);
+            showTasks(data, 'expired', 5 - newTasks);
         })
         .on("triggers", function (data) {
             showTriggers(data);
@@ -104,6 +105,10 @@ $(function(){
                 });
             }
         });
+
+        if (type === 'new') {
+            newTasks = data.length > 3 ? 3 : data.length;
+        }
 
         counter.text(data.length);
         container.html(html);
