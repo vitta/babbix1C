@@ -31,6 +31,10 @@ $(function(){
 
     function raiseDisconnect() {
         $(".site-name").addClass("disconnected");
+        soundAlert();
+    }
+
+    function soundAlert() {
         $(".error-sound")[0].play();
     }
 
@@ -71,6 +75,16 @@ $(function(){
             date = new Date();
 
         timer.html(pad(date.getHours()) + ':' + pad(date.getMinutes()));
+    }
+
+    function getCounters(data, level, oldvalue) {
+        var value = data.filter(function(elem) {return elem.priority == level}).length;
+
+        if (parseInt(oldvalue) < value && level > 3) {
+            soundAlert();
+        }
+
+        return value;
     }
 
     function showTasks(data, type, count) {
@@ -114,9 +128,15 @@ $(function(){
         counters['high'] = $('.triggers-counters .high .counter');
         counters['average'] = $('.triggers-counters .average .counter');
 
-        counters.disaster.text(data.filter(function(elem) {return elem.priority == 5}).length);
-        counters.high.text(data.filter(function(elem) {return elem.priority == 4}).length);
-        counters.average.text(data.filter(function(elem) {return elem.priority == 3}).length);
+        counters.disaster.text(function(index, text) {
+            return getCounters(data, 5, text);
+        });
+        counters.high.text(function(index, text) {
+            return getCounters(data, 4, text);
+        });
+        counters.average.text(function(index, text) {
+            return getCounters(data, 3, text);
+        });
 
         data.sort(function(a, b) {
             if(a.priority < b.priority) {
