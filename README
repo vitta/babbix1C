@@ -1,1 +1,6 @@
-This file was created by JetBrains WebStorm 4.0.3 for binding GitHub repository
+# Приложение на Node.js визуализирующее данные от разных источников
+
+* Состояние триггеров из zabbix.api
+* Результат выполнения хранимых процедур в MS SQL
+
+Планируется работа с soap-сервисами
